@@ -10,14 +10,14 @@ def train(model, X, y, loss_fn, optimizer, epochs=1000):
 
 def train_cnn(model, loader, loss_fn, optimizer, epochs=1000):
     for epoch in range(epochs):
-        for images, labels in loader: # X = images, y = labels
+        for batch, (images, labels) in enumerate(loader): # batch = the batch index
             optimizer.zero_grad()
             output = model(images)
             loss = loss_fn(output, labels)
             loss.backward()
             optimizer.step()
 
-            if epoch % 200 == 0:
+            if batch % 200 == 0:
                 print(f'Epoch {epoch:4d}, loss {loss.item():.4f}')
 
     return model
